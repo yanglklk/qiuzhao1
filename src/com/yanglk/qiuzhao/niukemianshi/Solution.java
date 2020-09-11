@@ -1,10 +1,12 @@
 package com.yanglk.qiuzhao.niukemianshi;
 
 
+import com.sun.imageio.plugins.gif.GIFImageReader;
 import com.sun.xml.internal.ws.client.sei.ResponseBuilder;
 
 import javax.sound.midi.Soundbank;
 import java.util.*;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Solution {
 
@@ -17,6 +19,7 @@ public class Solution {
         //new Solution().permute(new int[]{1,2,3});
         //new Solution().LIS(new int[]{2,1,5,3,6,4,8,9,7});
         new Solution().findMedianinTwoSortedAray(new int[]{1,3,5,7,9,11},new int[]{2,4,6,8,10,12});
+
     }
 
 
@@ -589,6 +592,57 @@ public class Solution {
             }
         }
         return arr1[r1]<arr2[r2] ? arr1[r1]:arr2[r2];
+    }
+
+    public int solve (char[][] grid) {
+        // write code here
+        int c=0;
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                if (grid[i][j]=='1'){
+                    c++;
+                    dfs(grid,i,j);
+                }
+            }
+        }
+        return c;
+    }
+    public void dfs(char[][] gird,int x,int y){
+        gird[x][y]='0';
+        if (x-1>=0&&gird[x-1][y]=='1'){
+            dfs(gird,x-1,y);
+        }
+        if (x+1<gird.length &&gird[x+1][y]=='1'){
+            dfs(gird,x+1,y);
+        }
+        if (y-1>=0&&gird[x][y-1]=='1'){
+            dfs(gird,x,y-1);
+        }
+        if (y+1<gird[0].length &&gird[x][y+1]=='1'){
+            dfs(gird,x,y+1);
+        }
+    }
+
+    public int getLong(String A,int n){
+        int[][] opt =new int[n][n];
+        int max=0;
+        for (int d = 0; d < n; d++) {
+            for (int i = 0; i < n-d; i++) {
+                int j=i+d;
+                if (A.charAt(i)==A.charAt(j)){
+                    if (d<=1){
+                        opt[i][j]=1;
+                    }
+                    else {
+                        opt[i][j]=opt[i+1][j-1];
+                    }
+                    if (opt[i][j]==1){
+                        max=Math.max(max,d);
+                    }
+                }
+            }
+        }
+        return max;
     }
 
 
