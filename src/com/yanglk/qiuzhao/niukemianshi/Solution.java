@@ -18,8 +18,8 @@ public class Solution {
         //System.out.println(new Solution().maxLength(new int[]{2, 2, 3, 4, 3}));
         //new Solution().permute(new int[]{1,2,3});
         //new Solution().LIS(new int[]{2,1,5,3,6,4,8,9,7});
-        new Solution().findMedianinTwoSortedAray(new int[]{1,3,5,7,9,11},new int[]{2,4,6,8,10,12});
-
+        //new Solution().findMedianinTwoSortedAray(new int[]{1,3,5,7,9,11},new int[]{2,4,6,8,10,12});
+        solution("abaccd");
     }
 
 
@@ -643,6 +643,44 @@ public class Solution {
             }
         }
         return max;
+    }
+
+
+//    static int solution1(String s) {
+//        int c1=0;
+//        int l1=0;
+//        int f1=0;
+//        while (f1!=s.length()){
+//            l1=s.lastIndexOf(s.charAt(f1));
+//            f1=l1+1;
+//            c1++;
+//        }
+//        int c2=0;
+//        int l2=0;
+//        int f2=0;
+//        String t=new StringBuffer(s).reverse().toString();
+//        while (f2!=s.length()){
+//            l2=s.lastIndexOf(s.charAt(f2));
+//            f2=l2+1;
+//            c2++;
+//        }
+//        return Math.min(c1,c2);
+//    }
+
+    static int solution(String s) {
+        int n=s.length();
+        int[] opt=new int[n];
+        opt[0]=1;
+        for (int i = 1; i < n; i++) {
+            opt[i]=opt[i-1]+1;
+            for (int j = 0; j < i; j++) {
+                if (s.charAt(i)==s.charAt(j)){
+                    int t= j==0? 1:opt[j-1]+1;
+                    opt[i]=Math.min(opt[i],t);
+                }
+            }
+        }
+        return opt[n-1];
     }
 
 
